@@ -1,36 +1,225 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frontend - e-Kuatia Manager
 
-## Getting Started
+Interfaz web para la gestión de facturación electrónica de Paraguay (SET e-Kuatia).
 
-First, run the development server:
+## 🚀 Tecnologías
+
+- **Next.js 15** - Framework React con App Router
+- **React 19** - Biblioteca de interfaz de usuario
+- **Material-UI (MUI)** - Componentes de interfaz
+- **TypeScript** - Tipado estático
+- **Axios** - Cliente HTTP
+- **React Hook Form** - Gestión de formularios
+- **Recharts** - Gráficos y visualizaciones
+- **date-fns** - Manejo de fechas
+
+## 📋 Requisitos Previos
+
+- Node.js 18+ o superior
+- npm o yarn
+- API Backend funcionando (FacturaElectronica)
+
+## 🔧 Instalación
+
+```bash
+# Instalar dependencias
+npm install
+
+# Copiar archivo de variables de entorno
+copy .env.example .env.local
+
+# Editar .env.local y configurar la URL de la API
+# NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+## 🏃‍♂️ Ejecución
+
+### Modo Desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+La aplicación estará disponible en: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Modo Producción
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Construir para producción
+npm run build
 
-## Learn More
+# Iniciar servidor de producción
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Estructura del Proyecto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+frontend/
+├── src/
+│   ├── app/                      # Páginas (App Router)
+│   │   ├── dashboard/            # Dashboard principal
+│   │   ├── empresas/             # Gestión de empresas
+│   │   ├── clientes/             # Gestión de clientes
+│   │   ├── facturas/             # Gestión de facturas
+│   │   │   ├── nueva/            # Crear factura
+│   │   │   └── [id]/             # Ver detalle (futuro)
+│   │   ├── reportes/             # Reportes y estadísticas
+│   │   ├── configuracion/        # Configuración
+│   │   ├── layout.tsx            # Layout raíz
+│   │   └── page.tsx              # Página principal
+│   ├── components/               # Componentes reutilizables
+│   │   ├── Layout.tsx            # Layout con navegación
+│   │   ├── FacturaForm.tsx       # Formulario de facturas
+│   │   └── StatsCard.tsx         # Tarjeta de estadísticas
+│   ├── lib/                      # Utilidades y configuración
+│   │   └── api.ts                # Cliente API y tipos
+│   └── theme/                    # Tema de Material-UI
+│       └── theme.ts
+├── public/                       # Archivos estáticos
+├── .env.example                  # Variables de entorno de ejemplo
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🎨 Características
 
-## Deploy on Vercel
+### ✅ Implementadas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Dashboard**: Resumen de facturación con estadísticas
+- **Gestión de Empresas**: CRUD completo de empresas emisoras
+- **Gestión de Clientes**: CRUD completo de clientes
+- **Gestión de Facturas**:
+  - Crear facturas con múltiples líneas de detalle
+  - Listar facturas con filtros
+  - Enviar facturas a SET
+  - Consultar estado de facturas
+  - Anular facturas
+- **Reportes**: Estadísticas y gráficos de facturación
+- **Configuración**: Información del sistema
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🔄 Componentes Principales
+
+#### Layout
+Navegación lateral con menú principal y barra superior.
+
+#### FacturaForm
+Formulario completo para crear facturas con:
+- Datos del cliente
+- Datos de la factura
+- Múltiples líneas de detalle
+- Cálculo automático de totales, IVA y descuentos
+
+#### StatsCard
+Tarjetas de estadísticas con iconos y colores personalizables.
+
+## 🔌 Integración con Backend
+
+El frontend se comunica con la API REST del backend a través de Axios.
+
+### Endpoints Utilizados
+
+```typescript
+// Facturas
+POST   /api/facturas              // Crear factura
+GET    /api/facturas/{id}         // Obtener factura
+GET    /api/facturas              // Listar facturas
+POST   /api/facturas/{id}/enviar  // Enviar a SET
+POST   /api/facturas/{id}/anular  // Anular factura
+GET    /api/facturas/{id}/estado  // Consultar estado
+
+// Empresas (requiere implementación en backend)
+GET    /api/empresas              // Listar empresas
+GET    /api/empresas/{id}         // Obtener empresa
+POST   /api/empresas              // Crear empresa
+PUT    /api/empresas/{id}         // Actualizar empresa
+DELETE /api/empresas/{id}         // Eliminar empresa
+
+// Clientes (requiere implementación en backend)
+GET    /api/clientes              // Listar clientes
+GET    /api/clientes/{id}         // Obtener cliente
+POST   /api/clientes              // Crear cliente
+PUT    /api/clientes/{id}         // Actualizar cliente
+DELETE /api/clientes/{id}         // Eliminar cliente
+```
+
+## 🎯 Próximos Pasos
+
+### Backend (Requerido)
+
+1. **Crear Controllers para Empresas y Clientes**
+   - `EmpresasController.cs`
+   - `ClientesController.cs`
+
+2. **Implementar Servicios**
+   - `IEmpresaService` y `EmpresaService`
+   - `IClienteService` y `ClienteService`
+
+3. **Agregar DTOs**
+   - `EmpresaDTO.cs`
+   - `ClienteDTO.cs`
+
+### Frontend (Mejoras)
+
+- [ ] Página de detalle de factura
+- [ ] Descarga de XML y PDF
+- [ ] Visualización de código QR
+- [ ] Filtros avanzados en listados
+- [ ] Paginación de tablas
+- [ ] Exportación de reportes (Excel, PDF)
+- [ ] Modo oscuro
+- [ ] Notificaciones en tiempo real
+- [ ] Autenticación y autorización
+- [ ] Multi-idioma (ES/EN)
+
+## 🐛 Solución de Problemas
+
+### Error de Conexión con API
+
+Si la aplicación no puede conectarse al backend:
+
+1. Verificar que el backend esté corriendo en `http://localhost:5000`
+2. Revisar la variable `NEXT_PUBLIC_API_URL` en `.env.local`
+3. Verificar CORS en el backend (debe permitir `http://localhost:3000`)
+
+### Error "Module not found"
+
+```bash
+# Limpiar caché y reinstalar
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Errores de TypeScript
+
+```bash
+# Verificar tipos
+npm run build
+```
+
+## 📱 Responsive Design
+
+La interfaz está completamente optimizada para:
+- 📱 Móviles (< 600px)
+- 📱 Tablets (600px - 960px)
+- 💻 Desktop (> 960px)
+
+## 🔒 Seguridad
+
+- Las variables de entorno sensibles deben configurarse en el backend
+- El frontend no maneja certificados ni credenciales SET
+- Todas las comunicaciones con SET se realizan a través del backend
+- Autenticación y autorización pendientes de implementación
+
+## 📄 Licencia
+
+Este proyecto es propiedad privada. Todos los derechos reservados.
+
+## 📞 Soporte
+
+Para soporte técnico, contactar al equipo de desarrollo.
+
+---
+
+**Desarrollado para la gestión de facturación electrónica según normativa SET Paraguay (e-Kuatia v150)**
